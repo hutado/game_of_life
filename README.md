@@ -38,3 +38,5 @@ python gof_pygame.py --randomize
 
 * ПРОБЕЛ - пауза
 * ЛКМ - закрасить/удалить клетку
+
+Задание взято [отсюда](https://dementiy.github.io/assignments/life/)
