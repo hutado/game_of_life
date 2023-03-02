@@ -65,6 +65,22 @@ class Console(UI):
         if key in [ord('q'), ord('Q')]:
             self.running = False
 
+    def close_window(self) -> None:
+        """
+        Финальный экран и закрытие окна
+        """
+
+        self.screen.nodelay(False)
+        self.screen.erase()
+        _message = f'Кол-во поколений: {self.life.generations}'
+        self.screen.addstr(round(self.height / 2), round(self.width / 2 - len(_message) / 2), _message)
+        self.screen.refresh()
+        self.screen.getch()
+        curses.nocbreak()
+        self.screen.keypad(0)
+        curses.echo()
+        curses.endwin()
+
     def run(self) -> None:
         """
         Запуск игры
@@ -73,14 +89,10 @@ class Console(UI):
         while self.running and self.life.is_changing and not self.life.is_max_generations_exceeded:
             self.draw_elements()
 
-        curses.nocbreak()
-        self.screen.keypad(0)
-        curses.echo()
-        curses.endwin()
+        self.close_window()
 
 
 if __name__ == '__main__':
-
     parser = argparse.ArgumentParser(
         prog='Game of Life',
         formatter_class=argparse.RawDescriptionHelpFormatter,
