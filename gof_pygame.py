@@ -131,15 +131,17 @@ if __name__ == '__main__':
     parser.add_argument('--width', required=False, type=int, default=500)
     parser.add_argument('--cell-size', required=False, type=int, default=20)
     parser.add_argument('--randomize', required=False, default=False, action='store_true')
+    parser.add_argument('--speed', required=False, type=int, default=10)
 
     args = parser.parse_args()
 
     height_ = args.height
     width_ = args.width
     cell_size_ = args.cell_size
-    randomize = args.randomize
+    randomize_ = args.randomize
+    speed_ = args.speed
 
-    game: GameOfLife = GameOfLife((height_ // cell_size_, width_ // cell_size_), randomize)
-    gui: GUI = GUI(game, cell_size_)
+    game = GameOfLife((height_ // cell_size_, width_ // cell_size_), randomize_)
+    gui = GUI(game, cell_size_, speed_)
 
     gui.run()

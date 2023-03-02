@@ -58,7 +58,7 @@ class GameOfLife:
         # Текущее число поколений
         self.generations = 0
 
-    def create_grid(self, randomize: bool=False) -> list:
+    def create_grid(self, randomize: bool=False) -> Grid:
         """
         Создание списка клеток
         Клетка живая, если значение 1, иначе мертвая, значение 0
@@ -70,15 +70,15 @@ class GameOfLife:
 
         Returns
         -------
-        out : list
-            Список списков
+        out : Grid
+            Заполненная сетка
         """
 
         return Grid([[choice([0, 1]) if randomize else 0 for _ in range(self.cols)] for _ in range(self.rows)])
 
     def count_neighbours(self, cell: Cell) -> int:
         """
-        Подсчет количества соседих клеток
+        Подсчет количества соседних клеток
 
         Parameters
         ----------
@@ -102,13 +102,13 @@ class GameOfLife:
 
         return neighbours - self.curr_generation[cell.row][cell.col]
 
-    def get_next_generation(self) -> list:
+    def get_next_generation(self) -> Grid:
         """
         Получение следующего поколения
 
         Returns
         -------
-        out : list
+        out : Grid
             Новое поколение
         """
 

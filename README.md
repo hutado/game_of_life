@@ -1,6 +1,7 @@
 # GameOfLife
 
 Реализация [Игры "Жизнь"](https://ru.wikipedia.org/wiki/%D0%98%D0%B3%D1%80%D0%B0_%C2%AB%D0%96%D0%B8%D0%B7%D0%BD%D1%8C%C2%BB) с помощью PyGame и curses.
+Задание взято [отсюда](https://dementiy.github.io/assignments/life/)
 
 ## Правила
 
@@ -34,9 +35,33 @@ python gof_pygame.py --width 640 --height 480 --cell-size 10
 python gof_pygame.py --randomize
 ```
 
-## Управление в окне PyGame
+Запустить игру с другой скоростью
+
+```bash
+python gof_pygame.py --speed 10
+```
+
+### curses
+
+Запустить игру со стандартными настройками
+
+```bash
+python gof_curses.py
+```
+
+Запустить игру с другой скоростью
+
+```bash
+python gof_pygame.py --speed 100
+```
+
+## Управление
+
+### PyGame
 
 * ПРОБЕЛ - пауза
 * ЛКМ - закрасить/удалить клетку
 
-Задание взято [отсюда](https://dementiy.github.io/assignments/life/)
+### curses
+
+* Q - выход
