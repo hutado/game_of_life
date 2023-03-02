@@ -94,11 +94,13 @@ class Console(UI):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        prog='Game of Life',
+        prog='Game of Life curses',
+        description='Консольная версия Conway\'s Game Of Life',
+        epilog='Нажмите Q, чтобы выйти из игры',
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
 
-    parser.add_argument('--speed', required=False, type=int, default=100)
+    parser.add_argument('-s', '--speed', required=False, type=int, default=100, help='Задержка обновления')
 
     args = parser.parse_args()
 

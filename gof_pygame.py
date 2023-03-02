@@ -123,15 +123,17 @@ class GUI(UI):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        prog='Game of Life',
+        prog='Game of Life PyGame',
+        description='Графическая версия Conway\'s Game Of Life',
+        epilog='Нажмите ПРОБЕЛ, чтобы поставить на паузу или снять с паузы',
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
 
-    parser.add_argument('--height', required=False, type=int, default=300)
-    parser.add_argument('--width', required=False, type=int, default=500)
-    parser.add_argument('--cell-size', required=False, type=int, default=20)
-    parser.add_argument('--randomize', required=False, default=False, action='store_true')
-    parser.add_argument('--speed', required=False, type=int, default=10)
+    parser.add_argument('--height', required=False, type=int, default=300, help='Высота окна в px')
+    parser.add_argument('--width', required=False, type=int, default=500, help='Ширина окна в px')
+    parser.add_argument('--cell-size', required=False, type=int, default=20, help='Размер клетки в px')
+    parser.add_argument('-r', '--randomize', required=False, default=False, action='store_true', help='Случайное заполнение поля')
+    parser.add_argument('-s', '--speed', required=False, type=int, default=10, help='Скорость игры')
 
     args = parser.parse_args()
 
