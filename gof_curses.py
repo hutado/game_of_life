@@ -105,8 +105,8 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    speed_ = args.speed
-    max_ = args.max
+    speed_: int = args.speed
+    max_: int = args.max
 
     gui = Console(speed_, max_)
     gui.run()

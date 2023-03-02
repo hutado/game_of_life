@@ -138,12 +138,12 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    height_ = args.height
-    width_ = args.width
-    cell_size_ = args.cell_size
-    randomize_ = args.randomize
-    speed_ = args.speed
-    max_ = args.max
+    height_: int = args.height
+    width_: int = args.width
+    cell_size_: int = args.cell_size
+    randomize_: bool = args.randomize
+    speed_: int = args.speed
+    max_: int = args.max
 
     game = GameOfLife((height_ // cell_size_, width_ // cell_size_), randomize_, max_)
     gui = GUI(game, cell_size_, speed_)
