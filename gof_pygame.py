@@ -118,7 +118,7 @@ class GUI(UI):
             clock.tick(self.speed)
 
         pygame.quit()
-        print(f'Количество поколений: {self.life.generations}')
+        print(f'Количество поколений: {self.life.generations - 1}')
 
 
 if __name__ == '__main__':
@@ -134,6 +134,7 @@ if __name__ == '__main__':
     parser.add_argument('--cell-size', required=False, type=int, default=20, help='Размер клетки в px')
     parser.add_argument('-r', '--randomize', required=False, default=False, action='store_true', help='Случайное заполнение поля')
     parser.add_argument('-s', '--speed', required=False, type=int, default=10, help='Скорость игры')
+    parser.add_argument('--max', required=False, type=int, default=None, help='Максимальное количество поколений')
 
     args = parser.parse_args()
 
@@ -142,8 +143,9 @@ if __name__ == '__main__':
     cell_size_ = args.cell_size
     randomize_ = args.randomize
     speed_ = args.speed
+    max_ = args.max
 
-    game = GameOfLife((height_ // cell_size_, width_ // cell_size_), randomize_)
+    game = GameOfLife((height_ // cell_size_, width_ // cell_size_), randomize_, max_)
     gui = GUI(game, cell_size_, speed_)
 
     gui.run()

@@ -18,10 +18,10 @@ class Console(UI):
     Класс консольного интерфейса
     """
 
-    def __init__(self, speed: int=100) -> None:
+    def __init__(self, speed: int=100, max_generations: int=None) -> None:
         self.screen = self.init_screen()
         self.height, self.width = self.screen.getmaxyx()
-        self.life = GameOfLife((self.height - 2, self.width - 2), True)
+        self.life = GameOfLife((self.height - 2, self.width - 2), True, max_generations)
         self.speed = speed
         self.running = True
 
@@ -72,7 +72,7 @@ class Console(UI):
 
         self.screen.nodelay(False)
         self.screen.erase()
-        _message = f'Кол-во поколений: {self.life.generations}'
+        _message = f'Кол-во поколений: {self.life.generations - 1}'
         self.screen.addstr(round(self.height / 2), round(self.width / 2 - len(_message) / 2), _message)
         self.screen.refresh()
         self.screen.getch()
@@ -101,10 +101,12 @@ if __name__ == '__main__':
     )
 
     parser.add_argument('-s', '--speed', required=False, type=int, default=100, help='Задержка обновления')
+    parser.add_argument('--max', required=False, type=int, default=None, help='Максимальное количество поколений')
 
     args = parser.parse_args()
 
     speed_ = args.speed
+    max_ = args.max
 
-    gui = Console(speed_)
+    gui = Console(speed_, max_)
     gui.run()

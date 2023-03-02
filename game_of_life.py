@@ -56,7 +56,7 @@ class GameOfLife:
         # Максимальное количество поколений
         self.max_generations = max_generations
         # Текущее число поколений
-        self.generations = 0
+        self.generations = 1
 
     def create_grid(self, randomize: bool=False) -> Grid:
         """
