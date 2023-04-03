@@ -4,8 +4,10 @@
 Модуль с базовым классом интерфейса
 """
 
+# built-in
 import abc
 
+# internal
 from game_of_life import GameOfLife
 
 

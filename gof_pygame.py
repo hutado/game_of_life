@@ -4,14 +4,17 @@
 Модуль с реализацией графической версии
 """
 
+# built-in
 import argparse
-
-import pygame
-from pygame.locals import *
 
 from math import floor
 from itertools import product
 
+# third-party
+import pygame
+from pygame.locals import *
+
+# internal
 from ui import UI
 from game_of_life import GameOfLife
 

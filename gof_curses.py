@@ -4,11 +4,15 @@
 Модуль с реализацией консольной версии
 """
 
-import curses
+# built-in
 import argparse
 
 from itertools import product
 
+# third-party
+import curses
+
+# internal
 from ui import UI
 from game_of_life import GameOfLife
 
