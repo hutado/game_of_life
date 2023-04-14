@@ -22,10 +22,10 @@ class Console(UI):
     Класс консольного интерфейса
     """
 
-    def __init__(self, speed: int=100, max_generations: int=None) -> None:
+    def __init__(self, speed: int=100) -> None:
         self.screen = self.init_screen()
         self.height, self.width = self.screen.getmaxyx()
-        self.life = GameOfLife((self.height - 2, self.width - 2), True, max_generations)
+        self.life = GameOfLife((self.height - 2, self.width - 2), True)
         self.speed = speed
         self.running = True
 
@@ -76,8 +76,6 @@ class Console(UI):
 
         self.screen.nodelay(False)
         self.screen.erase()
-        _message = f'Кол-во поколений: {self.life.generations - 1}'
-        self.screen.addstr(round(self.height / 2), round(self.width / 2 - len(_message) / 2), _message)
         self.screen.refresh()
         self.screen.getch()
         curses.nocbreak()
@@ -90,7 +88,7 @@ class Console(UI):
         Запуск игры
         """
 
-        while self.running and self.life.is_changing and not self.life.is_max_generations_exceeded:
+        while self.running and self.life.is_changing:
             self.draw_elements()
 
         self.close_window()
@@ -105,12 +103,10 @@ if __name__ == '__main__':
     )
 
     parser.add_argument('-s', '--speed', required=False, type=int, default=100, help='Задержка обновления')
-    parser.add_argument('--max', required=False, type=int, default=None, help='Максимальное количество поколений')
 
     args = parser.parse_args()
 
     speed_: int = args.speed
-    max_: int = args.max
 
-    gui = Console(speed_, max_)
+    gui = Console(speed_)
     gui.run()

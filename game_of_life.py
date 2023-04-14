@@ -47,17 +47,17 @@ class GameOfLife:
     Игра "Жизнь"
     """
 
-    def __init__(self, size: tuple[int, int], randomize: bool=True, max_generations: int=None) -> None:
+    def __init__(self, size: tuple[int, int], randomize: bool=True, s_count: list=[2, 3], b_count: list=[3]) -> None:
         # Размер поля
         self.rows, self.cols = size
         # Предыдущее поколение
         self.prev_generation = self.create_grid()
         # Текущее поколение
         self.curr_generation = self.create_grid(randomize=randomize)
-        # Максимальное количество поколений
-        self.max_generations = max_generations
-        # Текущее число поколений
-        self.generations = 1
+        # Необходимое количество соседей для выживания
+        self.survival_count = s_count
+        # Необходимое количество соседей для рождения
+        self.birth_count = b_count
 
     def create_grid(self, randomize: bool=False) -> Grid:
         """
@@ -118,9 +118,9 @@ class GameOfLife:
         for row, col in product(range(self.curr_generation.rows), range(self.curr_generation.cols)):
             neighbours = self.count_neighbours(Cell(row, col))
 
-            if self.curr_generation[row][col] == 1 and (neighbours < 2 or neighbours > 3):
+            if self.curr_generation[row][col] == 1 and  neighbours not in self.survival_count:
                 new_generation[row][col] = 0
-            elif self.curr_generation[row][col] == 0 and neighbours == 3:
+            elif self.curr_generation[row][col] == 0 and neighbours in self.birth_count:
                 new_generation[row][col] = 1
 
         return new_generation
@@ -132,16 +132,6 @@ class GameOfLife:
 
         new_generation = self.get_next_generation()
         self.prev_generation, self.curr_generation = self.curr_generation, new_generation
-
-        self.generations += 1
-
-    @property
-    def is_max_generations_exceeded(self) -> bool:
-        """
-        Признак превышения максимального числа поколений
-        """
-
-        return self.max_generations is not None and self.generations > self.max_generations
 
     @property
     def is_changing(self) -> bool:

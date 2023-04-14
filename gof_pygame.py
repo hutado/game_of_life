@@ -47,10 +47,10 @@ class GUI(UI):
         """
 
         for x in range(0, self.width, self.cell_size):
-            pygame.draw.line(self.screen, pygame.Color('black'), (x, 0), (x, self.height))
+            pygame.draw.line(self.screen, pygame.Color('grey'), (x, 0), (x, self.height))
 
         for y in range(0, self.height, self.cell_size):
-            pygame.draw.line(self.screen, pygame.Color('black'), (0, y), (self.width, y))
+            pygame.draw.line(self.screen, pygame.Color('grey'), (0, y), (self.width, y))
 
     def draw_grid(self) -> None:
         """
@@ -58,7 +58,7 @@ class GUI(UI):
         """
 
         for c, r in product(range(self.life.curr_generation.cols), range(self.life.curr_generation.rows)):
-            color = pygame.Color('green') if self.life.curr_generation[r][c] == 1 else pygame.Color('white')
+            color = pygame.Color('black') if self.life.curr_generation[r][c] == 1 else pygame.Color('white')
             rect = pygame.Rect(c * self.cell_size, r * self.cell_size, self.cell_size, self.cell_size)
             pygame.draw.rect(self.screen, color, rect)
 
@@ -110,7 +110,7 @@ class GUI(UI):
             self.check_events()
 
             if not self.pause:
-                if self.life.is_changing and not self.life.is_max_generations_exceeded:
+                if self.life.is_changing:
                     self.life.step()
                 else:
                     self.pause = True
@@ -121,7 +121,6 @@ class GUI(UI):
             clock.tick(self.speed)
 
         pygame.quit()
-        print(f'Количество поколений: {self.life.generations - 1}')
 
 
 if __name__ == '__main__':
@@ -132,23 +131,27 @@ if __name__ == '__main__':
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
 
-    parser.add_argument('--height', required=False, type=int, default=300, help='Высота окна в px')
-    parser.add_argument('--width', required=False, type=int, default=500, help='Ширина окна в px')
-    parser.add_argument('--cell-size', required=False, type=int, default=20, help='Размер клетки в px')
+    parser.add_argument('--rows', required=False, type=int, default=80, help='Количество строк')
+    parser.add_argument('--cols', required=False, type=int, default=80, help='Количество столбцов')
+    parser.add_argument('--cell-size', required=False, type=int, default=10, help='Размер клетки в px')
     parser.add_argument('-r', '--randomize', required=False, default=False, action='store_true', help='Случайное заполнение поля')
     parser.add_argument('-s', '--speed', required=False, type=int, default=10, help='Скорость игры')
-    parser.add_argument('--max', required=False, type=int, default=None, help='Максимальное количество поколений')
+    parser.add_argument('-S', '--survival', required=False, type=str, default='23', help='Необходимо количество соседей для выживания клетки')
+    parser.add_argument('-B', '--birth', required=False, type=str, default='3', help='Необходимо количество соседей для рождения клетки')
 
     args = parser.parse_args()
 
-    height_: int = args.height
-    width_: int = args.width
-    cell_size_: int = args.cell_size
+    rows_: int = args.rows
+    cols_: int = args.cols
     randomize_: bool = args.randomize
     speed_: int = args.speed
-    max_: int = args.max
+    cell_size_: int = args.cell_size
+    s_count: list = args.survival
+    b_count: list = args.birth
 
-    game = GameOfLife((height_ // cell_size_, width_ // cell_size_), randomize_, max_)
+    print(s_count)
+
+    game = GameOfLife((rows_, cols_), randomize_)
     gui = GUI(game, cell_size_, speed_)
 
     gui.run()
