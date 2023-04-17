@@ -25,7 +25,7 @@ class Console(UI):
     def __init__(self, speed: int=100) -> None:
         self.screen = self.init_screen()
         self.height, self.width = self.screen.getmaxyx()
-        self.life = GameOfLife((self.height - 2, self.width - 2), True)
+        self.life = GameOfLife((self.height - 2, self.width - 2), True, [2, 3], [3], False)
         self.speed = speed
         self.running = True
 

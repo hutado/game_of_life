@@ -144,6 +144,7 @@ if __name__ == '__main__':
     parser.add_argument('-s', '--speed', required=False, type=int, default=10, help='Скорость игры')
     parser.add_argument('-S', '--survival', required=False, type=str, default='23', help='Необходимое количество соседей для выживания клетки')
     parser.add_argument('-B', '--birth', required=False, type=str, default='3', help='Необходимое количество соседей для рождения клетки')
+    parser.add_argument('-i', '--infinity', required=False, default=False, action='store_true', help='Бесконечное поле')
 
     args = parser.parse_args()
 
@@ -154,8 +155,9 @@ if __name__ == '__main__':
     cell_size_: int = args.cell_size
     s_count: list = [int(i) for i in args.survival]
     b_count: list = [int(i) for i in args.birth]
+    infinity_: bool = args.infinity
 
-    game = GameOfLife((rows_, cols_), randomize_, s_count, b_count)
+    game = GameOfLife((rows_, cols_), randomize_, s_count, b_count, infinity_)
     gui = GUI(game, cell_size_, speed_)
 
     gui.run()

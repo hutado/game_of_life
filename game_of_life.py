@@ -4,7 +4,7 @@
 Модуль с базовыми классами игры
 """
 
-# built in
+# built-in
 from __future__ import annotations
 
 from copy import deepcopy
@@ -47,7 +47,7 @@ class GameOfLife:
     Игра "Жизнь"
     """
 
-    def __init__(self, size: tuple[int, int], randomize: bool=True, s_count: list=[2, 3], b_count: list=[3]) -> None:
+    def __init__(self, size: tuple[int, int], randomize: bool, s_count: list, b_count: list, infinity: bool) -> None:
         # Размер поля
         self.rows, self.cols = size
         # Предыдущее поколение
@@ -58,6 +58,8 @@ class GameOfLife:
         self.survival_count = s_count
         # Необходимое количество соседей для рождения
         self.birth_count = b_count
+        # Признак бесконечности поля
+        self.infinity = infinity
 
     def create_grid(self, randomize: bool=False) -> Grid:
         """
@@ -98,7 +100,10 @@ class GameOfLife:
             row_ = r + cell.row
             column_ = c + cell.col
 
-            if 0 <= row_ < self.curr_generation.rows and 0 <= column_ < self.curr_generation.cols:
+            if self.infinity:
+                neighbours += self.curr_generation[(cell.row + r) % self.rows][(cell.col + c) % self.cols]
+
+            elif 0 <= row_ < self.curr_generation.rows and 0 <= column_ < self.curr_generation.cols:
                 neighbours += self.curr_generation[row_][column_]
 
         return neighbours - self.curr_generation[cell.row][cell.col]
