@@ -12,11 +12,17 @@ from itertools import product
 
 # third-party
 import pygame
-from pygame.locals import *
+from pygame.locals import QUIT, MOUSEBUTTONDOWN, KEYDOWN, K_SPACE
 
 # internal
 from ui import UI
 from game_of_life import GameOfLife
+
+
+# Цвета фона, сетки и живых клеток
+POWDER_BLUE = (176, 224, 230)
+LIGHT_BLUE = (173, 216, 230)
+STEEL_BLUE = (70, 130, 180)
 
 
 class GUI(UI):
@@ -47,10 +53,10 @@ class GUI(UI):
         """
 
         for x in range(0, self.width, self.cell_size):
-            pygame.draw.line(self.screen, pygame.Color('grey'), (x, 0), (x, self.height))
+            pygame.draw.line(self.screen, pygame.Color(LIGHT_BLUE), (x, 0), (x, self.height))
 
         for y in range(0, self.height, self.cell_size):
-            pygame.draw.line(self.screen, pygame.Color('grey'), (0, y), (self.width, y))
+            pygame.draw.line(self.screen, pygame.Color(LIGHT_BLUE), (0, y), (self.width, y))
 
     def draw_grid(self) -> None:
         """
@@ -58,7 +64,7 @@ class GUI(UI):
         """
 
         for c, r in product(range(self.life.curr_generation.cols), range(self.life.curr_generation.rows)):
-            color = pygame.Color('black') if self.life.curr_generation[r][c] == 1 else pygame.Color('white')
+            color = pygame.Color(STEEL_BLUE) if self.life.curr_generation[r][c] == 1 else pygame.Color(POWDER_BLUE)
             rect = pygame.Rect(c * self.cell_size, r * self.cell_size, self.cell_size, self.cell_size)
             pygame.draw.rect(self.screen, color, rect)
 
@@ -102,7 +108,7 @@ class GUI(UI):
 
         clock = pygame.time.Clock()
         pygame.display.set_caption('Game of Life')
-        self.screen.fill(pygame.Color('white'))
+        self.screen.fill(pygame.Color(POWDER_BLUE))
 
         self.draw_elements()
 
@@ -136,8 +142,8 @@ if __name__ == '__main__':
     parser.add_argument('--cell-size', required=False, type=int, default=10, help='Размер клетки в px')
     parser.add_argument('-r', '--randomize', required=False, default=False, action='store_true', help='Случайное заполнение поля')
     parser.add_argument('-s', '--speed', required=False, type=int, default=10, help='Скорость игры')
-    parser.add_argument('-S', '--survival', required=False, type=str, default='23', help='Необходимо количество соседей для выживания клетки')
-    parser.add_argument('-B', '--birth', required=False, type=str, default='3', help='Необходимо количество соседей для рождения клетки')
+    parser.add_argument('-S', '--survival', required=False, type=str, default='23', help='Необходимое количество соседей для выживания клетки')
+    parser.add_argument('-B', '--birth', required=False, type=str, default='3', help='Необходимое количество соседей для рождения клетки')
 
     args = parser.parse_args()
 
@@ -146,12 +152,10 @@ if __name__ == '__main__':
     randomize_: bool = args.randomize
     speed_: int = args.speed
     cell_size_: int = args.cell_size
-    s_count: list = args.survival
-    b_count: list = args.birth
+    s_count: list = [int(i) for i in args.survival]
+    b_count: list = [int(i) for i in args.birth]
 
-    print(s_count)
-
-    game = GameOfLife((rows_, cols_), randomize_)
+    game = GameOfLife((rows_, cols_), randomize_, s_count, b_count)
     gui = GUI(game, cell_size_, speed_)
 
     gui.run()
