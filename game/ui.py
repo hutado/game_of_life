@@ -15,7 +15,6 @@ import pygame
 from pygame.locals import QUIT, MOUSEBUTTONDOWN, KEYDOWN, K_SPACE
 
 # internal
-from ui import UI
 from game_of_life import GameOfLife
 
 
@@ -25,7 +24,7 @@ LIGHT_BLUE = (173, 216, 230)
 STEEL_BLUE = (70, 130, 180)
 
 
-class GUI(UI):
+class GUI:
     """
     Класс графического интерфейса
     """
@@ -34,8 +33,6 @@ class GUI(UI):
         self.life = life
         self.cell_size = cell_size
         self.speed = speed
-
-        super().__init__(life)
 
         # Настройки окна pygame
         self.width = self.cell_size * life.cols
